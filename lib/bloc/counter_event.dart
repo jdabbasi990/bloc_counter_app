@@ -1,8 +1,15 @@
 part of 'counter_bloc.dart';
 
 @immutable
-sealed class CounterEvent {}
+sealed class CounterEvent extends Equatable {
+  const CounterEvent();
 
-class InitEvent extends CounterEvent {}
+  @override
+  List<Object> get props => [];
+}
 
-class CounterincrementEvent extends CounterEvent {}
+// class InitEvent extends CounterEvent {}
+
+class CounterIncrementEvent extends CounterEvent {}
+
+class CounterDecrementEvent extends CounterEvent {}
