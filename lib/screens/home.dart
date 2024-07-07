@@ -1,4 +1,6 @@
+import 'package:bloc_counter/bloc/counter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    print('Build whole screen');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bloc Counter APP'),
@@ -18,23 +21,33 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            '0',
-            style: TextStyle(fontSize: 40),
+          BlocBuilder<CounterBloc, CounterState>(
+            builder: (context, state) {
+              print('Build only Text');
+
+              return Text(
+                state.counter.toString(),
+                style: TextStyle(fontSize: 60),
+              );
+            },
           ),
           const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<CounterBloc>().add(CounterIncrementEvent());
+                },
                 child: const Text('Add'),
               ),
               const SizedBox(
                 width: 10,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<CounterBloc>().add(CounterDecrementEvent());
+                },
                 child: const Text('Removed'),
               ),
             ],
